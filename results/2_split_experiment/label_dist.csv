@@ -1,0 +1,9 @@
+split,set,n,neg,neu,pos
+random_row,train,500000,0.1732,0.0652,0.7616
+random_row,test,100000,0.1729,0.0648,0.7623
+group_parent_asin,train,500000,0.1733,0.0651,0.7615
+group_parent_asin,test,100000,0.1736,0.0639,0.7626
+group_user,train,500000,0.1735,0.0649,0.7616
+group_user,test,100000,0.1702,0.0648,0.7649
+temporal,train,500000,0.1582,0.0644,0.7774
+temporal,test,100000,0.2176,0.0668,0.7156

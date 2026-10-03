@@ -1,0 +1,13 @@
+{
+  "n_train": 200000,
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "sampling": "pandas DataFrame.sample(random_state=seed), same as train_transformer.py",
+  "python": "3.11.9",
+  "pandas": "3.0.6",
+  "sklearn": "1.9.1",
+  "runtime_min": 5.6
+}

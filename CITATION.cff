@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: "If you use this code or data, please cite it as below."
+title: "Star Ratings Drift: code and derived data"
+authors:
+  - family-names: "He"
+    given-names: "Jun"
+    affiliation: "Department of Mass Communication, Open University of Kaohsiung"
+    orcid: "https://orcid.org/0000-0002-4008-4785"
+version: "1.0.0"
+license: ["MIT", "CC-BY-4.0"]
+repository-code: "https://github.com/<to-be-added>"

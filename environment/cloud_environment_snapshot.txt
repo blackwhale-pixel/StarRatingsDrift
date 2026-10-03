@@ -1,0 +1,5 @@
+python --version: Python 3.12.3
+uname -a: Linux 0377397e2287 6.18.38+ #1 SMP PREEMPT_DYNAMIC Fri Aug 28 09:06:50 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux
+CPU model: Intel(R) Xeon(R) Processor @ 2.50GHz
+CPU cores: 6
+Memory total: 6523212 kB

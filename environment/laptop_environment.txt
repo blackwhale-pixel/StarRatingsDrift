@@ -1,0 +1,10 @@
+Python 3.11.9 (virtual environment used for all laptop runs)
+Operating system: Microsoft Windows 11 Home, version 10.0.26200
+CPU: AMD Ryzen AI 9 HX 370; RAM: 32 GB
+GPU: NVIDIA GeForce RTX 5060 Laptop GPU, 8 GB (driver 595.71, driver CUDA version 13.2)
+PyTorch 2.11.0+cu128; Transformers 5.17.0 (see laptop_pip_freeze.txt for all packages)
+Ollama 0.35.0
+  mistral:latest  6577803aa9a0  4.4 GB
+  llama3.1:8b     46e0c10c039e  4.9 GB
+  qwen3:8b        500a1f067a9f  5.2 GB
+Snapshot taken 2 October 2026, after the analyses, from the same environment.

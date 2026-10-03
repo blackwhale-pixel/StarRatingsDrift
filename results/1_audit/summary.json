@@ -1,0 +1,42 @@
+{
+  "basic": {
+    "n_reviews": 43886944.0,
+    "n_users": 18286191.0,
+    "n_asin": 1946161.0,
+    "n_parent_asin": 1609860.0,
+    "verified_ratio": 0.9238939945328615,
+    "year_min": 1996.0,
+    "year_max": 2023.0,
+    "n_empty_text": 2534.0,
+    "n_text_shorter_than_50": 11307910.0
+  },
+  "meta_coverage_ratio": 1.0,
+  "variant_shared_groups": {
+    "n_groups": 298201,
+    "n_rows": 650174.0
+  },
+  "split_leakage_exact_text": {
+    "random_row": {
+      "n_test": 6511631,
+      "n_test_text_seen_in_train": 33697,
+      "leak_pct": 0.5175
+    },
+    "group_parent_asin": {
+      "n_test": 6667735,
+      "n_test_text_seen_in_train": 31776,
+      "leak_pct": 0.4766
+    },
+    "group_user": {
+      "n_test": 6527378,
+      "n_test_text_seen_in_train": 3651,
+      "leak_pct": 0.0559
+    }
+  },
+  "params": {
+    "min_len_for_dup": 50,
+    "sample_n": 50000,
+    "seed": 42,
+    "split": "hash(key) % 10 < 8 => train",
+    "duckdb": "1.5.6"
+  }
+}

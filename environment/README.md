@@ -1,0 +1,4 @@
+- `library_versions_by_run.csv`: versions written by each script at run time (authoritative).
+- `laptop_environment.txt`, `laptop_pip_freeze.txt`: laptop used for transformer fine-tuning, the 200k TF-IDF runs, LLM annotation and the zero-shot test.
+- `cloud_environment_snapshot.txt`: the cloud sandbox after the analyses; it was reconfigured, so its contents may differ from the run-time environment.
+- `source_data_SHA256.txt`: checksums of the two source files used in the study.

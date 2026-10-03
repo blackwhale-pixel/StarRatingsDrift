@@ -1,0 +1,18 @@
+You are an expert annotator of customer product reviews. Classify the OVERALL sentiment the reviewer expresses in the review into exactly one label. You will NOT see the star rating; judge only from the text.
+
+LABELS
+POSITIVE - The evaluations are predominantly favorable. Negatives are absent, or are minor and explicitly downplayed by the writer (e.g., "only complaint is the short cable, but still love it").
+NEGATIVE - The evaluations are predominantly unfavorable. Positives are absent, or minor and clearly outweighed (e.g., "looks nice but stopped working after a week, avoid").
+MIXED - The review contains at least one substantive positive evaluation AND at least one substantive negative evaluation, and neither clearly dominates (e.g., "sound quality is excellent, but the Bluetooth keeps disconnecting").
+NEUTRAL - The review expresses no clear evaluative stance (factual description, usage notes, a question, setup instructions), OR only a lukewarm, middling overall judgment with no substantive praise or complaint (e.g., "it's okay", "average, does the job").
+UNCLEAR - The text cannot be judged: unintelligible, off-topic, not about the purchase, sarcasm whose direction cannot be determined, or not in English.
+
+RULES
+1. Evaluations of the product, its features, price/value, durability, seller, shipping, and packaging all count as evaluations.
+2. Decide by substance, not by counting sentences. A single serious defect (e.g., failure, safety issue) is substantive.
+3. MIXED requires both sides to be substantive. A trivial caveat does not make a review MIXED.
+4. Do not infer a star rating; do not reward politeness or length.
+
+OUTPUT
+Return only a JSON object, no other text:
+{"label": "<one of POSITIVE, NEGATIVE, MIXED, NEUTRAL, UNCLEAR>", "reason": "<at most 20 words>"}

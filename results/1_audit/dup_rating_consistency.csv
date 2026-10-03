@@ -1,0 +1,4 @@
+rating_agreement,n_groups,n_rows
+sd>=1,628,1548
+sd<1,3991,14805
+identical rating,362523,821761

@@ -1,0 +1,82 @@
+{
+  "prompt_sha": "5ebe279f4a50",
+  "excluded_non_english": 12,
+  "annotation_items_blind": {
+    "n_items": 3002,
+    "models": [
+      "ollama__llama3.1_8b",
+      "ollama__mistral",
+      "ollama__qwen3_8b"
+    ],
+    "pairwise_cohen_kappa": {
+      "ollama__llama3.1_8b vs ollama__mistral": 0.5384,
+      "ollama__llama3.1_8b vs ollama__qwen3_8b": 0.5737,
+      "ollama__mistral vs ollama__qwen3_8b": 0.6598
+    },
+    "fleiss_kappa": 0.586,
+    "three_star_distribution": {
+      "NEGATIVE": 0.5522,
+      "MIXED": 0.2766,
+      "NEUTRAL": 0.0939,
+      "NO_MAJORITY": 0.0392,
+      "POSITIVE": 0.0366,
+      "UNCLEAR": 0.0015
+    }
+  },
+  "semeval_laptop_items": {
+    "n_items": 1488,
+    "models": [
+      "ollama__llama3.1_8b",
+      "ollama__mistral",
+      "ollama__qwen3_8b"
+    ],
+    "pairwise_cohen_kappa": {
+      "ollama__llama3.1_8b vs ollama__mistral": 0.701,
+      "ollama__llama3.1_8b vs ollama__qwen3_8b": 0.7513,
+      "ollama__mistral vs ollama__qwen3_8b": 0.7232
+    },
+    "fleiss_kappa": 0.7246,
+    "semeval": {
+      "ollama__llama3.1_8b": {
+        "accuracy": 0.6559,
+        "kappa": 0.502,
+        "recall_by_gold": {
+          "POSITIVE": 0.6238,
+          "NEGATIVE": 0.7636,
+          "MIXED": 0.0435,
+          "NEUTRAL": 0.7135
+        }
+      },
+      "ollama__mistral": {
+        "accuracy": 0.6976,
+        "kappa": 0.5538,
+        "recall_by_gold": {
+          "POSITIVE": 0.7195,
+          "NEGATIVE": 0.7636,
+          "MIXED": 0.2391,
+          "NEUTRAL": 0.6378
+        }
+      },
+      "ollama__qwen3_8b": {
+        "accuracy": 0.6694,
+        "kappa": 0.5212,
+        "recall_by_gold": {
+          "POSITIVE": 0.6634,
+          "NEGATIVE": 0.7355,
+          "MIXED": 0.1304,
+          "NEUTRAL": 0.7405
+        }
+      },
+      "majority": {
+        "accuracy": 0.6801,
+        "kappa": 0.5351,
+        "recall_by_gold": {
+          "POSITIVE": 0.6683,
+          "NEGATIVE": 0.7669,
+          "MIXED": 0.1087,
+          "NEUTRAL": 0.7189
+        }
+      }
+    }
+  }
+}

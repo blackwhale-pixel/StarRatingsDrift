@@ -1,0 +1,89 @@
+{
+  "exact_record_duplicates_all_lengths": {
+    "n_groups": 404871,
+    "n_rows_in_groups": 882885.0,
+    "n_redundant_rows": 478014.0
+  },
+  "distinct_counts": {
+    "n_rows": 32579034,
+    "exact": 32108062,
+    "loose": 32098737,
+    "prefix120": 32078997
+  },
+  "leakage": [
+    {
+      "split": "random_row_true",
+      "match": "h_exact",
+      "n_test": 6512368,
+      "n_leak": 141640,
+      "leak_pct": 2.1749
+    },
+    {
+      "split": "random_row_true",
+      "match": "h_loose",
+      "n_test": 6512368,
+      "n_leak": 144261,
+      "leak_pct": 2.2152
+    },
+    {
+      "split": "random_row_true",
+      "match": "h_prefix",
+      "n_test": 6512368,
+      "n_leak": 150186,
+      "leak_pct": 2.3062
+    },
+    {
+      "split": "group_parent_asin",
+      "match": "h_exact",
+      "n_test": 6667735,
+      "n_leak": 31776,
+      "leak_pct": 0.4766
+    },
+    {
+      "split": "group_parent_asin",
+      "match": "h_loose",
+      "n_test": 6667735,
+      "n_leak": 34409,
+      "leak_pct": 0.5161
+    },
+    {
+      "split": "group_parent_asin",
+      "match": "h_prefix",
+      "n_test": 6667735,
+      "n_leak": 39724,
+      "leak_pct": 0.5958
+    },
+    {
+      "split": "group_user",
+      "match": "h_exact",
+      "n_test": 6527378,
+      "n_leak": 3651,
+      "leak_pct": 0.0559
+    },
+    {
+      "split": "group_user",
+      "match": "h_loose",
+      "n_test": 6527378,
+      "n_leak": 5556,
+      "leak_pct": 0.0851
+    },
+    {
+      "split": "group_user",
+      "match": "h_prefix",
+      "n_test": 6527378,
+      "n_leak": 7045,
+      "leak_pct": 0.1079
+    }
+  ],
+  "loose_groups_with_multiple_exact_variants": {
+    "n_groups": 7829,
+    "n_rows": 21749.0
+  },
+  "params": {
+    "min_len": 50,
+    "split_rule": "hash(key) % 10 < 8 => train",
+    "loose": "lowercase, strip HTML tags, keep letters a-z only",
+    "prefix": "first 120 chars of loose text",
+    "duckdb": "1.5.6"
+  }
+}

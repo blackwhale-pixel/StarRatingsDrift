@@ -1,0 +1,32 @@
+{
+  "n_pool_after_dedup": 41178392,
+  "n_train_A": 500000,
+  "n_test": 100000,
+  "seed": 42,
+  "n_boot": 1000,
+  "labels": "1-2=neg, 3=neu, 4-5=pos",
+  "years": "2013-2023",
+  "full_stage_B": true,
+  "splits": {
+    "random_row": [
+      "hash(rid) % 10 < 8",
+      "hash(rid) % 10 >= 8"
+    ],
+    "group_parent_asin": [
+      "hash(parent_asin) % 10 < 8",
+      "hash(parent_asin) % 10 >= 8"
+    ],
+    "group_user": [
+      "hash(user_id) % 10 < 8",
+      "hash(user_id) % 10 >= 8"
+    ],
+    "temporal": [
+      "yr BETWEEN 2013 AND 2020",
+      "yr BETWEEN 2022 AND 2023"
+    ]
+  },
+  "python": "3.12.3",
+  "duckdb": "1.5.6",
+  "sklearn": "1.9.1",
+  "runtime_min": 136.6
+}

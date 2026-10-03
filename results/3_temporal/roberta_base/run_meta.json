@@ -1,0 +1,21 @@
+{
+  "model": "FacebookAI/roberta-base",
+  "n_train": 200000,
+  "max_len": 256,
+  "batch": 16,
+  "grad_accum": 2,
+  "epochs": 1,
+  "lr": 2e-05,
+  "seeds": [
+    43,
+    44
+  ],
+  "precision": "bf16 autocast",
+  "class_weighting": "balanced",
+  "smoke": false,
+  "gpu": "NVIDIA GeForce RTX 5060 Laptop GPU",
+  "torch": "2.11.0+cu128",
+  "transformers": "5.17.0",
+  "python": "3.11.9",
+  "total_minutes": 82.1
+}

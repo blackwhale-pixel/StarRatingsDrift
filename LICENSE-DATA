@@ -1,0 +1,9 @@
+The derived data, result tables and figures in the folders data/, results/ and
+figures/ are licensed under the Creative Commons Attribution 4.0 International
+License (CC BY 4.0): https://creativecommons.org/licenses/by/4.0/
+
+Copyright (c) 2026 Jun He
+
+This license does not cover the Amazon Reviews 2023 dataset or the SemEval-2014
+Task 4 data, which remain under their own terms. No review text from either
+source is included in this repository.

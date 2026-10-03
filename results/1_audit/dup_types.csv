@@ -1,0 +1,5 @@
+dup_type,n_groups,n_rows,pct_rows
+0_unique,31740920,31740920,97.427
+1_same_user_same_parent (variant/repost),299255,652453,2.003
+2_same_user_cross_product (copy-paste),57732,163340,0.501
+3_cross_user (template/spam),10155,22321,0.069
