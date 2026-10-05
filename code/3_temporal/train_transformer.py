@@ -23,6 +23,7 @@ from transformers import AutoTokenizer, AutoModelForSequenceClassification, Data
 def get_args():
     a = argparse.ArgumentParser()
     a.add_argument("--data_dir", default="gpu_data")
+    a.add_argument("--train_file", default="train_2013_2016.parquet", help="訓練檔名（位於 data_dir）")
     a.add_argument("--out_dir", default="transformer_out")
     a.add_argument("--model", default="distilbert/distilroberta-base")
     a.add_argument("--n_train", type=int, default=200_000)
@@ -78,7 +79,7 @@ def main():
     os.makedirs(args.out_dir, exist_ok=True); os.makedirs(os.path.join(args.out_dir, "preds"), exist_ok=True)
     log(f"GPU：{gpu}｜模型：{args.model}｜torch {torch.__version__}｜transformers {transformers.__version__}", t0)
 
-    train_all = pd.read_parquet(os.path.join(args.data_dir, "train_2013_2016.parquet"))
+    train_all = pd.read_parquet(os.path.join(args.data_dir, args.train_file))
     test_files = sorted(glob.glob(os.path.join(args.data_dir, "test_*.parquet")))
     if not test_files: sys.exit(f"在 {args.data_dir} 找不到 test_*.parquet")
     tests = {os.path.basename(f)[5:-8]: pd.read_parquet(f) for f in test_files}
@@ -139,7 +140,7 @@ def main():
             pd.DataFrame(rows).to_csv(res_path, index=False)
         del model, opt; torch.cuda.empty_cache()
 
-    json.dump({"model": args.model, "n_train": args.n_train, "max_len": args.max_len, "batch": args.batch,
+    json.dump({"model": args.model, "train_file": args.train_file, "n_train": args.n_train, "max_len": args.max_len, "batch": args.batch,
                "grad_accum": args.grad_accum, "epochs": args.epochs, "lr": args.lr, "seeds": args.seeds,
                "precision": "bf16 autocast", "class_weighting": "balanced", "smoke": args.smoke, "gpu": gpu,
                "torch": torch.__version__, "transformers": transformers.__version__,

@@ -1,0 +1,38 @@
+{
+  "title": "Star Ratings Drift: code and derived data",
+  "upload_type": "software",
+  "description": "Code and derived data for the paper \"Star Ratings Drift: Temporal Concept Drift in Large-Scale Review Sentiment Classification\". The study uses the Electronics category of Amazon Reviews 2023. No review text is included: every review is identified by a key (user ID, parent ASIN and normalized-text hash) that can be rebuilt from the official data. Code is released under the MIT License; derived data, results and figures under CC BY 4.0.",
+  "creators": [
+    {
+      "name": "Yang, Jun-He",
+      "affiliation": "Department of Mass Communication, Open University of Kaohsiung",
+      "orcid": "0000-0002-4008-4785"
+    },
+    {
+      "name": "Tang, Fang-Kai",
+      "affiliation": "Department of E-Sport Technology, Cheng Shiu University",
+      "orcid": "0009-0001-8200-6101"
+    },
+    {
+      "name": "Chan, Chia-Pang",
+      "affiliation": "Department of Information Management, and Center for Environmental Toxin and Emerging-Contaminant Research, Cheng Shiu University",
+      "orcid": "0000-0003-0016-8674"
+    },
+    {
+      "name": "Tsai, Chiung-Hui",
+      "affiliation": "Department of Computer Science and Information Engineering, Da-Yeh University",
+      "orcid": "0000-0002-2250-4715"
+    }
+  ],
+  "keywords": [
+    "sentiment analysis",
+    "concept drift",
+    "temporal evaluation",
+    "online reviews",
+    "star ratings",
+    "large language models",
+    "data leakage"
+  ],
+  "license": "cc-by-4.0",
+  "version": "1.0.0"
+}

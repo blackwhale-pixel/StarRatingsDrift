@@ -16,14 +16,14 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import f1_score
 
 ap = argparse.ArgumentParser()
-ap.add_argument("--data_dir", default="gpu_data"); ap.add_argument("--out_dir", default="tfidf200k_out")
+ap.add_argument("--data_dir", default="gpu_data"); ap.add_argument("--train_file", default="train_2013_2016.parquet"); ap.add_argument("--out_dir", default="tfidf200k_out")
 ap.add_argument("--n_train", type=int, default=200_000); ap.add_argument("--seeds", type=int, nargs="+", default=[42, 43, 44])
 a = ap.parse_args()
 os.makedirs(os.path.join(a.out_dir, "preds"), exist_ok=True); os.makedirs(os.path.join(a.out_dir, "train_rids"), exist_ok=True)
 T0 = time.time()
 def log(m): print(f"{time.strftime('%H:%M:%S')} [{(time.time()-T0)/60:5.1f} min] {m}", flush=True)
 
-train_all = pd.read_parquet(os.path.join(a.data_dir, "train_2013_2016.parquet"))
+train_all = pd.read_parquet(os.path.join(a.data_dir, a.train_file))
 tests = {os.path.basename(f)[5:-8]: pd.read_parquet(f) for f in sorted(glob.glob(os.path.join(a.data_dir, "test_*.parquet")))}
 log(f"訓練池 {len(train_all):,} 筆；測試集 {len(tests)} 個")
 rows = []
@@ -41,7 +41,7 @@ for seed in a.seeds:
         rows.append({"seed": seed, "test_set": name, "n_train": len(tr), "macro_f1": round(f1_score(y, yhat, average="macro"), 4)})
         log(f"  {name:20s} macro-F1 = {rows[-1]['macro_f1']}")
     pd.DataFrame(rows).to_csv(os.path.join(a.out_dir, "tfidf200k_results.csv"), index=False)
-json.dump({"n_train": a.n_train, "seeds": a.seeds, "sampling": "pandas DataFrame.sample(random_state=seed), same as train_transformer.py",
+json.dump({"n_train": a.n_train, "train_file": a.train_file, "seeds": a.seeds, "sampling": "pandas DataFrame.sample(random_state=seed), same as train_transformer.py",
            "python": platform.python_version(), "pandas": pd.__version__, "sklearn": sklearn.__version__,
            "runtime_min": round((time.time()-T0)/60, 1)}, open(os.path.join(a.out_dir, "run_meta.json"), "w"), indent=2)
 shutil.make_archive(a.out_dir, "zip", a.out_dir)

@@ -35,11 +35,11 @@ arrow(30.3, 55, 35.7, 55); arrow(64.3, 55, 69.7, 55)
 # row 2: three analyses
 box(2, 25, 28, 16, "4a. Split experiment", "random, product, user, temporal\nstage A: 500k-review samples\nstage B: full training portion", "#fef5e7")
 box(36, 25, 28, 16, "4b. Temporal evaluation", "train 2013-2016, test 2017-2023\nTF-IDF+LR, DistilRoBERTa,\nRoBERTa-base; 3 seeds", "#fdedec")
-box(70, 25, 28, 16, "4c. Rating-text analysis", "3,014 reviews, rating hidden\n3 open-weight LLM annotators\nSemEval-2014 external check", "#e8f8f5")
+box(70, 25, 28, 16, "4c. Rating-text analysis", "3,014 reviews, 3 LLM annotators\nSemEval-2014 external check\n400 reviews checked by humans", "#e8f8f5")
 for x in (16, 50, 84): arrow(84, 47.7, x, 41.3)
 # row 3: follow-up tests
-box(36, 2, 28, 16, "5. Zero-shot test", "Mistral 7B, no training\n2,000 items per test year\npaired with 4b, same items", "#f5eef8")
-box(70, 2, 28, 16, "6. Robustness checks", "category reweighting\nequal training size, model size\ncategory-controlled trends", "#f4f6f6")
+box(36, 2, 28, 16, "5. Zero-shot test", "Mistral 7B, no task-specific\nfine-tuning; 2,000 items/year\npaired with 4b, same items", "#f5eef8")
+box(70, 2, 28, 16, "6. Robustness checks", "reweighting, equal training size\nexcluding 2023, binary task\nretraining on 2019-2020", "#f4f6f6")
 arrow(50, 24.7, 50, 18.3); arrow(84, 24.7, 84, 18.3); arrow(64.3, 33, 69.7, 10)
 save(fig, "Figure1_workflow")
 
@@ -99,12 +99,12 @@ comp.round(4).to_csv(f"{OUT}/Figure3_data.csv")
 # ---------- Figure 4: zero-shot vs trained on the same items ----------
 z = pd.read_json("/home/claude/zr/zs_runs/zs__mistral.jsonl", lines=True); z = z[z.label.notna()].drop_duplicates("rid", keep="last")
 z["zp"] = z.label.map({"NEGATIVE": 0, "NEUTRAL": 1, "POSITIVE": 2})
-ser = {"Zero-shot Mistral 7B (untrained)": ("#7d3c98", "D")}; ser.update({k: (v[1], v[2]) for k, v in M.items()})
+ser = {"Zero-shot Mistral 7B (no fine-tuning)": ("#7d3c98", "D")}; ser.update({k: (v[1], v[2]) for k, v in M.items()})
 vals = {k: [] for k in ser}; predneg = []
 for y in YRS:
     zz = z[z["sample"] == f"{y}_matched"][["rid", "zp"]]
     base = pd.read_csv(f"{M['DistilRoBERTa'][0]}/seed42_{y}_matched.csv")[["rid", "y"]].merge(zz, on="rid")
-    Y = base.y.values; vals["Zero-shot Mistral 7B (untrained)"].append(np.mean(f1s(Y, base.zp.values))); predneg.append((base.zp == 0).mean())
+    Y = base.y.values; vals["Zero-shot Mistral 7B (no fine-tuning)"].append(np.mean(f1s(Y, base.zp.values))); predneg.append((base.zp == 0).mean())
     for k, (d, _, _) in M.items():
         vals[k].append(np.mean([np.mean(f1s(Y, pd.read_csv(f"{d}/seed{s}_{y}_matched.csv").set_index("rid").loc[base.rid, "pred"].values)) for s in SEEDS]))
 fig, axes = plt.subplots(1, 2, figsize=(7.2, 2.7), gridspec_kw={"width_ratios": [1.4, 1]})

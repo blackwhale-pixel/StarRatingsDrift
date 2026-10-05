@@ -1,6 +1,6 @@
 # Star Ratings Drift: code and derived data
 
-Code and derived data for the paper *Star Ratings Drift: Temporal Concept Drift in Large-Scale Review Sentiment Classification* (Jun He, Open University of Kaohsiung).
+Code and derived data for the paper *Star Ratings Drift: Temporal Concept Drift in Large-Scale Review Sentiment Classification* (Jun-He Yang, Fang-Kai Tang, Chia-Pang Chan and Chiung-Hui Tsai).
 
 The study uses the Electronics category of Amazon Reviews 2023. **This repository contains no review text.** Every review is identified by a key that anyone with the official data can rebuild, so all samples, labels and predictions can be matched back to the source.
 
@@ -33,9 +33,9 @@ The same values are in `environment/source_data_SHA256.txt`. Check a download wi
 - `text_hash` = MD5 of the review text after lowercasing, collapsing runs of whitespace to one space and trimming.
 - `label`: `neg` = 1–2 stars, `neu` = 3 stars, `pos` = 4–5 stars.
 - `item_id` is an internal row number of the deduplicated pool; it carries no meaning outside this repository.
-- For 401 of 799,258 items (0.05%) the triple (user_id, parent_asin, text_hash) is not unique in the pool, because the same user posted the same text under different variants of one product.
+- For 504 of 1,299,258 items (0.04%) the triple (user_id, parent_asin, text_hash) is not unique in the pool. In 503 of them the same user posted the same text, with the same rating class, under 2 to 10 variants of one product, so any candidate row gives the same model input and label; for the remaining one, `label` identifies the row. The original row itself (its variant ASIN and timestamp) cannot always be recovered: candidates share the parent product, so subcategory analyses are unaffected, and `test_item_months.csv` uses the earliest timestamp among candidates from the item's year. `data/keys/nonunique_key_items.csv` lists these items (`n_key` = pool rows sharing the triple; `n_key_and_label` = rows also sharing the label), and `data/keys/nonunique_key_candidates.csv` lists each candidate's `asin`, `ts` and `rating` in the source file (made with `code/6_robustness_and_ids/check_nonunique_keys.py`).
 
-`data/keys/sample_membership.csv.gz` lists which items belong to each sample: `train_seed42` (500,000 reviews, 2013–2016), the 2013–2016 holdout and the 14 yearly test sets (`test_<year>_matched`, `test_<year>_natural`, 20,000 each). `data/keys/train_200k_by_seed.csv.gz` lists the 200,000-review training samples used by DistilRoBERTa, RoBERTa-base and the 200k TF-IDF model for seeds 42–44.
+`data/keys/sample_membership.csv.gz` lists which items belong to each sample: `train_seed42` (500,000 reviews, 2013–2016), `train_2019_2020` (500,000 reviews used for retraining, none of them in any test set), the 2013–2016 holdout and the 14 yearly test sets (`test_<year>_matched`, `test_<year>_natural`, 20,000 each). `data/keys/train_200k_by_seed.csv.gz` lists the 200,000-review training samples used by DistilRoBERTa, RoBERTa-base and the 200k TF-IDF model for seeds 42–44; `data/keys/train_recent_2019_2020_200k_by_seed.csv.gz` lists the corresponding samples for the retrained models.
 
 The annotation sample (`data/annotation/annotation_key.csv`) is keyed by `user_id`, `asin` and `ts` (timestamp in ms), which identify a review directly in the source file.
 
@@ -74,6 +74,11 @@ Because DuckDB reservoir sampling is not guaranteed to repeat exactly, a rerun o
 | Table 6 | odds ratios with category controls | `code/7_analysis/meta_analysis.py` |
 | 4.5 | zero-shot slopes | `code/7_analysis/zs_paired2.py` on `results/5_zero_shot/` |
 | 4.6 | product-mix reweighting | `code/7_analysis/meta_analysis.py`, `results/6_product_mix/` |
+| 4.7 (Table 7) | slopes without 2023; binary task without neutral items | `code/7_analysis/robustness_2023_binary.py` on `results/3_temporal/*/preds` |
+| 3.7, 4.2, 4.4, Appendix B | per-seed slopes, product/user cluster bootstrap, neutral-or-mixed trend, no-majority sensitivity | `code/7_analysis/robustness_cluster_seed_annotation.py` |
+| 3.8, 4.4 (human validation table) | human–LLM agreement, human three-star trend, sensitivity | `code/7_analysis/human_validation.py`; labels in `data/annotation/human_validation_labels.csv` (item IDs match `annotation_key.csv`) |
+| 4.8 (retraining table) | gains from training on 2019–2020 | `code/3_temporal/make_recent_train.py`, `tfidf_200k.py` / `train_transformer.py --train_file train_2019_2020.parquet`, `code/7_analysis/retraining_comparison.py` |
+| 4.7 (month-matched check) | slopes using January–September reviews only | `code/6_robustness_and_ids/make_test_months.py`, `code/7_analysis/robustness_month_matched.py`; months in `data/keys/test_item_months.csv` |
 | Figures 1–4 | — | `figures/make_figures.py` |
 
 ## Models and environment
@@ -85,7 +90,7 @@ Because DuckDB reservoir sampling is not guaranteed to repeat exactly, a rerun o
 
 ## Not included
 
-Review texts and product data from Amazon Reviews 2023, intermediate Parquet files containing text, SemEval-2014 sentences, and the free-text reasons returned by the LLM annotators (they may quote reviews). These are kept by the author and can be made available to reviewers through the journal.
+Review texts and product data from Amazon Reviews 2023, intermediate Parquet files containing text, SemEval-2014 sentences, and the free-text reasons returned by the LLM annotators (they may quote reviews). These are kept by the authors and can be made available to reviewers through the journal.
 
 ## License
 
