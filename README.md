@@ -10,8 +10,8 @@ The study uses the Electronics category of Amazon Reviews 2023. **This repositor
 |---|---|
 | `code/` | All scripts, numbered in the order they were run |
 | `data/keys/` | Public keys for every reviewed item used in training and testing |
-| `data/annotation/` | LLM annotation sample (IDs, year, star rating), labels, codebook, SemEval-2014 derived gold labels |
-| `results/` | Result tables, per-item predictions of every model and seed, run metadata |
+| `data/annotation/` | LLM annotation sample (IDs, year, star rating), labels, codebook, SemEval-2014 derived gold labels, item attributes (English flag, text length, overlap with training and test samples) |
+| `results/` | Result tables, per-item predictions of every model and seed (including predictions on the annotation sample), unrounded macro-F1 by seed, run metadata |
 | `figures/` | Figures 1–4 (PDF, PNG) and `make_figures.py` |
 | `environment/` | Library versions recorded at run time, cloud environment snapshot |
 
@@ -79,7 +79,18 @@ Because DuckDB reservoir sampling is not guaranteed to repeat exactly, a rerun o
 | 3.8, 4.4 (human validation table) | human–LLM agreement, human three-star trend, sensitivity | `code/7_analysis/human_validation.py`; labels in `data/annotation/human_validation_labels.csv` (item IDs match `annotation_key.csv`) |
 | 4.8 (retraining table) | gains from training on 2019–2020 | `code/3_temporal/make_recent_train.py`, `tfidf_200k.py` / `train_transformer.py --train_file train_2019_2020.parquet`, `code/7_analysis/retraining_comparison.py` |
 | 4.7 (month-matched check) | slopes using January–September reviews only | `code/6_robustness_and_ids/make_test_months.py`, `code/7_analysis/robustness_month_matched.py`; months in `data/keys/test_item_months.csv` |
+| 3.7, 4.4 (length control) | log-length control, length tertiles, four-star trend, human period odds ratio with length | `code/7_analysis/length_control.py` on `data/annotation/` (text length in `annotation_item_attributes.csv`) |
+| 4.9, Table 10, Table B6 | shift-share decomposition of three-star neutral recall; prediction distribution of negative-text three-star reviews | `code/7_analysis/shift_share_decomposition.py` → `results/4_annotation/shift_share_results.csv`; predictions in `results/4_annotation/annotation_preds/` |
+| Table 4, Table 9, Table B4 | unrounded macro-F1 for every model, test set and seed | `results/3_temporal/macro_f1_unrounded_by_seed.csv`, `macro_f1_unrounded_seed_means.csv` |
+| 4.2 | holdout composition by year and class | `results/3_temporal/holdout_year_by_class.csv` |
 | Figures 1–4 | — | `figures/make_figures.py` |
+
+### Notes on the added files (version 1.1.0)
+
+- `annotation_item_attributes.csv`: `english` (False for the 12 non-English reviews), `text_len` (characters), and whether the review appears in the 2013–2016 500,000-review training file (`in_train_2013_2016_500k`, 54 reviews; every seed's 200,000-review sample is drawn from this file), in any seed's 200,000-review sample (`in_train_200k_any_seed`, 43) or in any test set (`in_any_test_set`, 17).
+- `annotation_preds/<model>/seed<k>.csv`: `item_id`, predicted class (`pred`: 0 = negative, 1 = neutral, 2 = positive) and class probabilities for the 3,014 annotated reviews, from the models trained on 2013–2016 reviews.
+- Table 4 and Table 9 average the unrounded seed values; averaging values rounded to three decimals can differ by 0.001.
+- The analysis scripts need `pandas`, `numpy` and `statsmodels`, and are run from the repository root.
 
 ## Models and environment
 
